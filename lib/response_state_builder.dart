@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
   const ResponseStateBuilder({
-    required this.stream,
+    required this.bloc,
     required this.successWidgetBuilder,
     required this.errorWidgetBuilder,
     this.loadingWidgetBuilder,
@@ -11,15 +12,15 @@ class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
 
   final Widget Function(Success success) successWidgetBuilder;
   final Widget Function(Error error) errorWidgetBuilder;
-  final Stream stream;
+  final BlocBase bloc;
   final Widget Function()? loadingWidgetBuilder;
 
   @override
-  Widget build(BuildContext context) => StreamBuilder(
-        stream: stream,
-        builder: (_, snapshot) {
-          final state = snapshot.data;
-
+  Widget build(BuildContext context) => BlocBuilder(
+        bloc: bloc,
+        buildWhen: (_, state) =>
+            state is Loading || state is Error || state is Success,
+        builder: (_, state) {
           if (state == null || state is Loading) {
             return Center(
               child: const Text('LOADINGG'),
@@ -30,7 +31,7 @@ class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
             return successWidgetBuilder(state as Success);
           }
 
-          throw UnknownStateTypeException();
+          return Container();
         },
       );
 }
