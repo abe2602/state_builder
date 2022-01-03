@@ -35,5 +35,3 @@ class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
         },
       );
 }
-
-class UnknownStateTypeException implements Exception {}
