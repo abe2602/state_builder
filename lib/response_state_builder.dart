@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ResponseStateBuilder<Loading, Error, Success>
-    extends StatelessWidget {
+class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
   const ResponseStateBuilder({
     required this.bloc,
     required this.successWidgetBuilder,
@@ -18,20 +17,21 @@ class ResponseStateBuilder<Loading, Error, Success>
 
   @override
   Widget build(BuildContext context) => BlocBuilder(
-      bloc: bloc,
-      builder: (_, state) {
-        if (state == null || state is Loading) {
-          return Center(
-            child: const Text('LOADINGG'),
-          );
-        } else if (state is Error) {
-          return errorWidgetBuilder(state as Error);
-        } else if (state is Success) {
-          return successWidgetBuilder(state as Success);
-        }
+        bloc: bloc,
+        buildWhen: (_, state) =>
+            state is Loading || state is Error || state is Success,
+        builder: (_, state) {
+          if (state == null || state is Loading) {
+            return Center(
+              child: const Text('LOADINGG'),
+            );
+          } else if (state is Error) {
+            return errorWidgetBuilder(state as Error);
+          } else if (state is Success) {
+            return successWidgetBuilder(state as Success);
+          }
 
-        throw UnknownStateTypeException();
-      });
+          return Container();
+        },
+      );
 }
-
-class UnknownStateTypeException implements Exception {}

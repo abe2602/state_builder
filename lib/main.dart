@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:state_builder/action_handler.dart';
 import 'package:state_builder/main_bloc.dart';
 import 'package:state_builder/main_states.dart';
 import 'package:state_builder/response_state_builder.dart';
@@ -19,34 +20,44 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         body: SafeArea(
-          child: ResponseStateBuilder<Loading, Error, Success>(
+          child: ActionHandler<MainActions>(
             bloc: bloc,
-            errorWidgetBuilder: (error) {
-              return Center(
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  color: Colors.red,
-                ),
-              );
+            actionListener: (state) {
+              print(state);
             },
-            successWidgetBuilder: (success) {
-              return Center(
-                child: Column(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      color: Colors.blue,
-                    ),
-                    TextButton(
-                      onPressed: bloc.changeState,
-                      child: Text('Repetir'),
-                    ),
-                  ],
-                ),
-              );
-            },
+            child: ResponseStateBuilder<Loading, Error, Success>(
+              bloc: bloc,
+              errorWidgetBuilder: (error) {
+                return Center(
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    color: Colors.red,
+                  ),
+                );
+              },
+              successWidgetBuilder: (success) {
+                return Center(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.blue,
+                      ),
+                      TextButton(
+                        onPressed: bloc.changeState,
+                        child: Text('Repetir'),
+                      ),
+                      TextButton(
+                        onPressed: bloc.sendAction,
+                        child: Text('Enviar Ação'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
