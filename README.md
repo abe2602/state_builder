@@ -1,6 +1,4 @@
-# state_builder
-
-Response State Builder
+# Response State Builder
 
 ## Why?
 If you're using the Flutter Bloc library, you may note that there's some coupling between your view and the library code. 
