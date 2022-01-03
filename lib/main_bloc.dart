@@ -7,7 +7,7 @@ class MainBloc extends Cubit<MainStates> {
   }
 
   void changeState() {
-    emit(Idle());
+    emit(Loading());
 
     Future.delayed(
       const Duration(milliseconds: 5000),
