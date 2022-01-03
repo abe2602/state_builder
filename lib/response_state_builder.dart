@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 
-class ResponseStateBuilder<Loading, Error, Success>
-    extends StatelessWidget {
+class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
   const ResponseStateBuilder({
-    required this.bloc,
+    required this.stream,
     required this.successWidgetBuilder,
     required this.errorWidgetBuilder,
     this.loadingWidgetBuilder,
@@ -13,25 +11,28 @@ class ResponseStateBuilder<Loading, Error, Success>
 
   final Widget Function(Success success) successWidgetBuilder;
   final Widget Function(Error error) errorWidgetBuilder;
-  final BlocBase bloc;
+  final Stream stream;
   final Widget Function()? loadingWidgetBuilder;
 
   @override
-  Widget build(BuildContext context) => BlocBuilder(
-      bloc: bloc,
-      builder: (_, state) {
-        if (state == null || state is Loading) {
-          return Center(
-            child: const Text('LOADINGG'),
-          );
-        } else if (state is Error) {
-          return errorWidgetBuilder(state as Error);
-        } else if (state is Success) {
-          return successWidgetBuilder(state as Success);
-        }
+  Widget build(BuildContext context) => StreamBuilder(
+        stream: stream,
+        builder: (_, snapshot) {
+          final state = snapshot.data;
 
-        throw UnknownStateTypeException();
-      });
+          if (state == null || state is Loading) {
+            return Center(
+              child: const Text('LOADINGG'),
+            );
+          } else if (state is Error) {
+            return errorWidgetBuilder(state as Error);
+          } else if (state is Success) {
+            return successWidgetBuilder(state as Success);
+          }
+
+          throw UnknownStateTypeException();
+        },
+      );
 }
 
 class UnknownStateTypeException implements Exception {}

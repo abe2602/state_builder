@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: SafeArea(
           child: ResponseStateBuilder<Loading, Error, Success>(
-            bloc: bloc,
+            stream: bloc.stream,
             errorWidgetBuilder: (error) {
               return Center(
                 child: Container(
