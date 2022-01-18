@@ -1,7 +1,7 @@
 # Response State Builder
 
 ## Why?
-If you're using the Flutter Bloc library, you may note that there's some coupling between your view and the library code. 
+If you're using the Flutter Bloc library, you may notice that there's some coupling between your view and the library code. 
 BlocBuilder, BlocListener, etc may cause a lot of trouble to you if the library gets deprecated.
 Thinking in this problem, I've created the ResponseStateBuilder and ActionHandler. 
 
