@@ -16,13 +16,15 @@ class ResponseStateBuilder<Loading, Error, Success> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-        stream: stream,
+        stream: stream.where(
+            (event) => event is Loading || event is Error || event is Success,
+          ),
         builder: (_, snapshot) {
           final state = snapshot.data;
 
           if (state == null || state is Loading) {
             return Center(
-              child: const Text('LOADINGG'),
+              child: const CircularProgressIndicator(),
             );
           } else if (state is Error) {
             return errorWidgetBuilder(state as Error);
