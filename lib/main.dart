@@ -13,32 +13,28 @@ class MyApp extends StatelessWidget {
   final MainBloc bloc = MainBloc();
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: SafeArea(
-          child: ActionHandler<MainActions>(
-            actionInput: bloc.stream,
-            actionResult: (action) {
-              print(action);
-            },
-            child: ResponseStateBuilder<Loading, Error, Success>(
-              stream: bloc.stream,
-              errorWidgetBuilder: (error) {
-                return Center(
+  Widget build(BuildContext context) => MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Scaffold(
+          body: SafeArea(
+            child: ActionHandler<MainActions>(
+              actionInput: bloc.stream,
+              actionResult: (action) {
+                print(action);
+              },
+              child: ResponseStateBuilder<Loading, Error, Success>(
+                stream: bloc.stream,
+                errorWidgetBuilder: (error) => Center(
                   child: Container(
                     height: 100,
                     width: 100,
                     color: Colors.red,
                   ),
-                );
-              },
-              successWidgetBuilder: (success) {
-                return Center(
+                ),
+                successWidgetBuilder: (success) => Center(
                   child: Column(
                     children: [
                       Container(
@@ -56,12 +52,10 @@ class MyApp extends StatelessWidget {
                       ),
                     ],
                   ),
-                );
-              },
+                ),
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
