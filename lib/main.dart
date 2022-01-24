@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:state_builder/action_handler.dart';
-import 'package:state_builder/main_bloc.dart';
-import 'package:state_builder/main_states.dart';
-import 'package:state_builder/response_state_builder.dart';
+import 'package:state_builder/abstractions/classes_states/action_handler.dart';
+import 'package:state_builder/abstractions/classes_states/main_bloc.dart';
+import 'package:state_builder/abstractions/classes_states/main_states.dart';
+import 'package:state_builder/abstractions/classes_states/response_state_builder.dart';
 
 void main() {
   runApp(MyApp());
